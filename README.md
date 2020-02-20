@@ -12,27 +12,41 @@ To learn about the configuration and the wiring go to the [original library](htt
 Installation
 ------------
 
-The recommended way to install `go-rpi-rgb-led-matrix` is:
+The recommended way to add `go-rpi-rgb-led-matrix` package into your project is:
 
 ```sh
-go get github.com/tfk1410/go-rpi-rgb-led-matrix
+go get -v github.com/tfk1410/go-rpi-rgb-led-matrix
 ```
 
 Then you will get an **expected** error like this:
 
 ```
 # github.com/tfk1410/go-rpi-rgb-led-matrix
-/usr/bin/ld: cannot find -lrgbmatrix
-collect2: error: ld returned 1 exit status
+../../go/pkg/mod/github.com/tfk1410/go-rpi-rgb-led-matrix@v0.0.0-20180401002551-b26063b3169a/matrix.go:6:10: fatal error: led-matrix-c.h: No such file or directory
+    6 | #include <led-matrix-c.h>
+      |          ^~~~~~~~~~~~~~~~
+compilation terminated.
 ```
 
-This happens because you need to compile the `rgbmatrix` C bindings:
+This happens because you need to compile the `rgbmatrix` C bindings. Using the path provided to the go mod package:
 ```sh
-cd $GOPATH/src/github.com/tfk1410/go-rpi-rgb-led-matrix/vendor/rpi-rgb-led-matrix/
-git submodule update --init
-make
-cd $GOPATH/src/github.com/tfk1410/go-rpi-rgb-led-matrix/
-go install -v ./...
+cd $GOPATH/go/pkg/mod/github.com/tfk1410/go-rpi-rgb-led-matrix@v0.0.0-20180401002551-b26063b3169a/
+chmod 700 .
+mkdir vendor
+cd vendor
+git clone https://github.com/hzeller/rpi-rgb-led-matrix.git
+cd rpi-rgb-led-matrix
+make -j
+```
+
+This will compile the latest version of the library. The latest version tested with the binding is always the one as the submodule in this repo. Try with that commit if you encounter any issues.
+
+After this is done go back to your project and execute the go get command again. This should now work:
+
+```sh
+$ go get -v github.com/tfk1410/go-rpi-rgb-led-matrix
+go: finding github.com/tfk1410/go-rpi-rgb-led-matrix latest
+github.com/tfk1410/go-rpi-rgb-led-matrix
 ```
 
 Examples
