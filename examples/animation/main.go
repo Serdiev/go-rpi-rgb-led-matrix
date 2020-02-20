@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/fogleman/gg"
-	"github.com/mcuadros/go-rpi-rgb-led-matrix"
+	"github.com/tfk1410/go-rpi-rgb-led-matrix"
 )
 
 var (
