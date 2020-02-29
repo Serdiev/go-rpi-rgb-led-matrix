@@ -1,4 +1,4 @@
-# go-rpi-rgb-led-matrix [![GoDoc](https://godoc.org/github.com/tfk1410/go-rpi-rgb-led-matrix?status.svg)](https://godoc.org/github.com/tfk1410/go-rpi-rgb-led-matrix) [![Build Status](https://travis-ci.org/tfk1410/go-rpi-rgb-led-matrix.svg?branch=master)](https://travis-ci.org/tfk1410/go-rpi-rgb-led-matrix) 
+# go-rpi-rgb-led-matrix [![GoDoc](https://godoc.org/github.com/tfk1410/go-rpi-rgb-led-matrix?status.svg)](https://godoc.org/github.com/tfk1410/go-rpi-rgb-led-matrix)
 <img width="250" src="https://cloud.githubusercontent.com/assets/1573114/20248154/c17c1f2e-a9dd-11e6-805b-bf7d8ee73121.gif" align="right" />
 
 Go binding for [`rpi-rgb-led-matrix`](https://github.com/hzeller/rpi-rgb-led-matrix) an excellent C++ library to control [RGB LED displays](https://learn.adafruit.com/32x16-32x32-rgb-led-matrix/overview) with Raspberry Pi GPIO.
@@ -48,6 +48,19 @@ $ go get -v github.com/tfk1410/go-rpi-rgb-led-matrix
 go: finding github.com/tfk1410/go-rpi-rgb-led-matrix latest
 github.com/tfk1410/go-rpi-rgb-led-matrix
 ```
+
+Led-slowdown-gpio
+--------
+
+In my tests I often require to change the value of the led-slowdown-gpio option from the default 1. It is not possible right now to change this option through the binding. The way to go about it is to go into the go mod package directory and into the rpi-rgb-led-matrix library. After that edit the `lib/Makefile` uncomment the line `DEFINES+=-DRGB_SLOWDOWN_GPIO` and change it to the appropriate value. Compile the whole library and rebuild your final project with all dependant packages and the setting should be applied. Example:
+```sh
+cd $GOPATH/go/pkg/mod/github.com/tfk1410/go-rpi-rgb-led-matrix@v0.0.0-20180401002551-b26063b3169a/vendor/rpi-rgb-led-matrix
+sed -i 's/.*RGB_SLOWDOWN_GPIO.*/DEFINE+=-DRGB_SLOWDOWN_GPIO=2/' lib/Makefile
+make -j
+# go back o your project
+go build -a
+```
+
 
 Examples
 --------
