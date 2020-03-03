@@ -254,6 +254,16 @@ func (c *RGBLedMatrix) Close() error {
 	return nil
 }
 
+// GetBrightness returns the current brightness setting of the matrix
+func (c *RGBLedMatrix) GetBrightness() int {
+	return int(C.led_matrix_get_brightness(c.matrix))
+}
+
+// SetBrightness sets a new brightness setting to the matrix
+func (c *RGBLedMatrix) SetBrightness(brightness int) {
+	C.led_matrix_set_brightness(c.matrix, C.uchar(brightness))
+}
+
 func colorToUint32(c color.Color) uint32 {
 	if c == nil {
 		return 0
