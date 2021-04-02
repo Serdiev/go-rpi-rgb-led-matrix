@@ -118,7 +118,7 @@ func (c *HardwareConfig) toC() *C.struct_RGBLedMatrixOptions {
 	o.brightness = C.int(c.Brightness)
 	o.scan_mode = C.int(c.ScanMode)
 	o.hardware_mapping = C.CString(c.HardwareMapping)
-	o.pixel_mapper_config = c.CString(c.PixelMapperConfig)
+	o.pixel_mapper_config = C.CString(c.PixelMapperConfig)
 
 	if c.ShowRefreshRate == true {
 		C.set_show_refresh_rate(o, C.int(1))
