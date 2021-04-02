@@ -85,6 +85,10 @@ type HardwareConfig struct {
 	Brightness int
 	// ScanMode progressive or interlaced
 	ScanMode ScanMode // strip color layout
+	// A string describing a sequence of pixel mappers that should be applied
+	// to this matrix. A semicolon-separated list of pixel-mappers with optional
+	// parameter.
+	PixelMapperConfig string
 	// Disable the PWM hardware subsystem to create pulses. Typically, you don't
 	// want to disable hardware pulsing, this is mostly for debugging and figuring
 	// out if there is interference with the sound system.
@@ -114,6 +118,7 @@ func (c *HardwareConfig) toC() *C.struct_RGBLedMatrixOptions {
 	o.brightness = C.int(c.Brightness)
 	o.scan_mode = C.int(c.ScanMode)
 	o.hardware_mapping = C.CString(c.HardwareMapping)
+	o.pixel_mapper_config = c.CString(c.PixelMapperConfig)
 
 	if c.ShowRefreshRate == true {
 		C.set_show_refresh_rate(o, C.int(1))
