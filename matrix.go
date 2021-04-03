@@ -232,7 +232,7 @@ func (c *RGBLedMatrix) Apply(leds []color.Color) error {
 
 // Render update the display with the data from the LED buffer
 func (c *RGBLedMatrix) Render() error {
-	w, h := c.Config.geometry()
+	w, h := c.Geometry()
 
 	C.led_matrix_swap(
 		c.matrix,
