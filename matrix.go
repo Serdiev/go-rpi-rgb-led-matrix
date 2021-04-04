@@ -226,7 +226,7 @@ func buildMatrixEmulator(config *HardwareConfig) Matrix {
 
 func buildTerminalMatrixEmulator(config *HardwareConfig) Matrix {
 	w, h := config.geometry()
-	if strings.Contains(config.PixelMapperConfig, "U-Mapper") {
+	if strings.Contains(config.PixelMapperConfig, "U-mapper") {
 		w /= 2
 		h *= 2
 	}

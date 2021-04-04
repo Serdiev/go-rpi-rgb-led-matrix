@@ -23,7 +23,6 @@ func draw(img image.Image) {
 
 	termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
 
-	colorblue := termbox.Attribute(termColor(0, 0, 255))
 	for y := 0; y < height; y++ {
 		for x := 0; x < width; x++ {
 			// Calculate average color for the corresponding image rectangle
@@ -38,14 +37,7 @@ func draw(img image.Image) {
 			r, g, b = avgRGB(img, startX, (startY+endY)/2, endX, endY)
 			colorDown := termbox.Attribute(termColor(r, g, b))
 
-			if x == width/2 {
-				termbox.SetCell(x, y, '▄', colorblue, colorblue)
-			} else if y == height/2 {
-				termbox.SetCell(x, y, '▄', colorDown, colorblue)
-			} else {
-				termbox.SetCell(x, y, '▄', colorDown, colorUp)
-			}
-
+			termbox.SetCell(x, y, '▄', colorDown, colorUp)
 		}
 	}
 	termbox.Flush()
