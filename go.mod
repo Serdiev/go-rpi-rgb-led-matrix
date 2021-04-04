@@ -9,6 +9,7 @@ require (
 	github.com/go-gl/glfw/v3.3/glfw v0.0.0-20210311203641-62640a716d48 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/kr/text v0.2.0 // indirect
+	github.com/nsf/termbox-go v1.1.0
 	golang.org/x/exp v0.0.0-20210220032938-85be41e4509f
 	golang.org/x/image v0.0.0-20210220032944-ac19c3e999fb // indirect
 	golang.org/x/mobile v0.0.0-20210220033013-bdb1ca9a1e08

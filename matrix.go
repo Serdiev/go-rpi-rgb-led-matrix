@@ -41,9 +41,11 @@ import (
 	"fmt"
 	"image/color"
 	"os"
+	"strings"
 	"unsafe"
 
 	"github.com/tfk1410/go-rpi-rgb-led-matrix/emulator"
+	"github.com/tfk1410/go-rpi-rgb-led-matrix/terminal"
 )
 
 // DefaultConfig default WS281x configuration
@@ -160,6 +162,7 @@ type RGBLedMatrix struct {
 }
 
 const MatrixEmulatorENV = "MATRIX_EMULATOR"
+const TerminalMatrixEmulatorENV = "MATRIX_TERMINAL_EMULATOR"
 
 // NewRGBLedMatrix returns a new matrix using the given size and config
 func NewRGBLedMatrix(config *HardwareConfig) (c Matrix, err error) {
@@ -175,6 +178,9 @@ func NewRGBLedMatrix(config *HardwareConfig) (c Matrix, err error) {
 
 	if isMatrixEmulator() {
 		return buildMatrixEmulator(config), nil
+	}
+	if isTerminalMatrixEmulator() {
+		return buildTerminalMatrixEmulator(config), nil
 	}
 
 	m := C.led_matrix_create_from_options(config.toC(), nil, nil)
@@ -205,9 +211,26 @@ func isMatrixEmulator() bool {
 	return false
 }
 
+func isTerminalMatrixEmulator() bool {
+	if os.Getenv(TerminalMatrixEmulatorENV) == "1" {
+		return true
+	}
+
+	return false
+}
+
 func buildMatrixEmulator(config *HardwareConfig) Matrix {
 	w, h := config.geometry()
 	return emulator.NewEmulator(w, h, emulator.DefaultPixelPitch, true)
+}
+
+func buildTerminalMatrixEmulator(config *HardwareConfig) Matrix {
+	w, h := config.geometry()
+	if strings.Contains(config.PixelMapperConfig, "U-Mapper") {
+		w /= 2
+		h *= 2
+	}
+	return terminal.NewTerminal(w, h, true)
 }
 
 // Initialize initialize library, must be called once before other functions are
