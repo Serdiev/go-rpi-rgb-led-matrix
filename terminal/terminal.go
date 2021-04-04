@@ -3,6 +3,7 @@ package terminal
 import (
 	"image"
 	"image/color"
+	"time"
 
 	"github.com/nsf/termbox-go"
 	"github.com/tfk1410/go-rpi-rgb-led-matrix/terminal/pxl"
@@ -36,6 +37,19 @@ func (t *Terminal) Init() {
 		panic(err)
 	}
 	termbox.SetOutputMode(termbox.Output256)
+
+	go func() {
+		for {
+			switch ev := termbox.PollEvent(); ev.Type {
+			case termbox.EventKey:
+				if ev.Key == termbox.KeyEsc || ev.Ch == 'q' {
+					t.Close()
+				}
+			default:
+				time.Sleep(10 * time.Millisecond)
+			}
+		}
+	}()
 }
 
 func (t *Terminal) Geometry() (width, height int) {
