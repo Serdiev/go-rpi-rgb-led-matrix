@@ -44,8 +44,8 @@ import (
 	"strings"
 	"unsafe"
 
-	"github.com/tfk1410/go-rpi-rgb-led-matrix/emulator"
-	"github.com/tfk1410/go-rpi-rgb-led-matrix/terminal"
+	"github.com/jmaitrehenry/go-rpi-rgb-led-matrix/emulator"
+	"github.com/jmaitrehenry/go-rpi-rgb-led-matrix/terminal"
 )
 
 // DefaultConfig default WS281x configuration

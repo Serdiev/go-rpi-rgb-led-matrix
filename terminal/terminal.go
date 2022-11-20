@@ -5,8 +5,8 @@ import (
 	"image/color"
 	"time"
 
-	"github.com/nsf/termbox-go"
-	"github.com/tfk1410/go-rpi-rgb-led-matrix/terminal/pxl"
+	"github.com/gdamore/tcell/termbox"
+	"github.com/jmaitrehenry/go-rpi-rgb-led-matrix/terminal/pxl"
 )
 
 type Terminal struct {

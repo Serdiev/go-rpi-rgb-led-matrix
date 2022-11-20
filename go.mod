@@ -1,4 +1,4 @@
-module github.com/tfk1410/go-rpi-rgb-led-matrix
+module github.com/jmaitrehenry/go-rpi-rgb-led-matrix
 
 go 1.16
 
@@ -6,6 +6,7 @@ require (
 	github.com/BurntSushi/xgb v0.0.0-20210121224620-deaf085860bc // indirect
 	github.com/disintegration/imaging v1.6.2
 	github.com/fogleman/gg v1.3.0
+	github.com/gdamore/tcell v1.4.0
 	github.com/go-gl/glfw/v3.3/glfw v0.0.0-20210311203641-62640a716d48 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/kr/text v0.2.0 // indirect
