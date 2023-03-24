@@ -171,7 +171,11 @@ $(TARGET).a : $(OBJECTS)
 	$(AR) rcs $@ $^
 
 $(TARGET).so.1 : $(OBJECTS)
+ifeq ($(UNAME), Linux)
 	$(CXX) -shared -Wl,-soname,$@ -o $@ $^ -lpthread  -lrt -lm -lpthread
+else
+	$(CXX) -shared -Wl,-install_name,$@ -o $@ $^ -lpthread -lm -lpthread
+endif
 
 led-matrix.o: led-matrix.cc $(INCDIR)/led-matrix.h
 thread.o : thread.cc $(INCDIR)/thread.h

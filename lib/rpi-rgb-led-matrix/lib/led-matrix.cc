@@ -49,6 +49,17 @@
 namespace rgb_matrix {
 using namespace internal;
 
+#ifdef __APPLE__
+/* Find the first occurrence of C in S or the final NUL byte.  */
+char * strchrnul (const char *s, int c_in) {
+  char c = c_in;
+  while (*s && (*s != c))
+    s++;
+
+  return (char *) s;
+}
+#endif
+
 // Pump pixels to screen. Needs to be high priority real-time because jitter
 class RGBMatrix::UpdateThread : public Thread {
 public:

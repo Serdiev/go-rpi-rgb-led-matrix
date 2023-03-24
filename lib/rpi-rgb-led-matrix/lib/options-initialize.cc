@@ -244,6 +244,7 @@ static bool FlagInit(int &argc, char **&argv,
 
 static bool drop_privs(const char *priv_user, const char *priv_group) {
   uid_t ruid, euid, suid;
+#ifdef __linux__
   if (getresuid(&ruid, &euid, &suid) >= 0) {
     if (euid != 0)   // not root anyway. No priv dropping.
       return true;
@@ -267,6 +268,7 @@ static bool drop_privs(const char *priv_user, const char *priv_group) {
     perror("setresuid()");
     return false;
   }
+#endif
   return true;
 }
 

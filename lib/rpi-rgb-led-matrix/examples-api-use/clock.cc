@@ -173,8 +173,9 @@ int main(int argc, char *argv[]) {
                            letter_spacing);
 
       // Wait until we're ready to show it.
+#ifndef __APPLE__
       clock_nanosleep(CLOCK_REALTIME, TIMER_ABSTIME, &next_time, NULL);
-
+#endif
       // Atomic swap with double buffer
       offscreen = matrix->SwapOnVSync(offscreen);
 

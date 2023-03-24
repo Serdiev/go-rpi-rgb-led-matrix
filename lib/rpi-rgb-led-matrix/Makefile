@@ -11,6 +11,9 @@ CSHARP_LIB_DIR=bindings/c\#
 
 all : $(RGB_LIBRARY)
 
+build-lib:
+	$(MAKE) -C $(RGB_LIBDIR)
+
 $(RGB_LIBRARY): FORCE
 	$(MAKE) -C $(RGB_LIBDIR)
 	$(MAKE) -C examples-api-use
