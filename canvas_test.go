@@ -137,3 +137,12 @@ func (m *MatrixMock) Close() error {
 	m.called["Close"] = true
 	return nil
 }
+
+// Close clears the matrix and close the matrix
+func (c *MatrixMock) GetBrightness() int {
+	return 2
+}
+
+// Close clears the matrix and close the matrix
+func (c *MatrixMock) SetBrightness(i int) {
+}

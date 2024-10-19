@@ -66,6 +66,15 @@ func (c *Canvas) Close() error {
 	return c.m.Close()
 }
 
+// Close clears the matrix and close the matrix
+func (c *Canvas) GetBrightness() int {
+	return 2
+}
+
+// Close clears the matrix and close the matrix
+func (c *Canvas) SetBrightness(i int) {
+}
+
 // Matrix is an interface that represent any RGB matrix, very useful for testing
 type Matrix interface {
 	Geometry() (width, height int)

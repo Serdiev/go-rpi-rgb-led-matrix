@@ -5,8 +5,8 @@ import (
 	"os"
 	"time"
 
+	rgbmatrix "github.com/Serdiev/go-rpi-rgb-led-matrix"
 	"github.com/disintegration/imaging"
-	"github.com/Serdiev/go-rpi-rgb-led-matrix"
 )
 
 var (
@@ -19,7 +19,7 @@ var (
 	show_refresh             = flag.Bool("led-show-refresh", false, "Show refresh rate.")
 	inverse_colors           = flag.Bool("led-inverse", false, "Switch if your matrix has inverse colors on.")
 	disable_hardware_pulsing = flag.Bool("led-no-hardware-pulse", false, "Don't use hardware pin-pulse generation.")
-	img                      = flag.String("image", "", "image path")
+	img                      = flag.String("image", "examples/image/tenor.gif", "image path")
 
 	rotate = flag.Int("rotate", 0, "rotate angle, 90, 180, 270")
 )
@@ -57,7 +57,7 @@ func main() {
 	close, err := tk.PlayGIF(f)
 	fatal(err)
 
-	time.Sleep(time.Second * 30)
+	time.Sleep(time.Second * 5)
 	close <- true
 }
 

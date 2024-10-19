@@ -40,6 +40,7 @@ func NewEmulator(w, h, pixelPitch int, autoInit bool) *Emulator {
 		GutterColor:             color.Gray{Y: 20},
 		PixelPitchToGutterRatio: 2,
 		Margin:                  10,
+		leds:                    make([]color.Color, w*h),
 	}
 	e.updatePixelPitchForGutter(pixelPitch / e.PixelPitchToGutterRatio)
 
@@ -53,7 +54,7 @@ func NewEmulator(w, h, pixelPitch int, autoInit bool) *Emulator {
 // Init initialize the emulator, creating a new Window and waiting until is
 // painted. If something goes wrong the function panics
 func (e *Emulator) Init() {
-	e.leds = make([]color.Color, e.Width*e.Height)
+	// e.leds = make([]color.Color, e.Width*e.Height)
 
 	e.wg.Add(1)
 	go driver.Main(e.mainWindowLoop)
@@ -65,6 +66,7 @@ func (e *Emulator) mainWindowLoop(s screen.Screen) {
 	e.s = s
 	// Calculate initial window size based on whatever our gutter/pixel pitch currently is.
 	dims := e.matrixWithMarginsRect()
+	fmt.Println(dims)
 	e.w, err = s.NewWindow(&screen.NewWindowOptions{
 		Title:  windowTitle,
 		Width:  dims.Max.X,
@@ -169,12 +171,17 @@ func (e *Emulator) Geometry() (width, height int) {
 }
 
 func (e *Emulator) Apply(leds []color.Color) error {
-	defer func() { e.leds = make([]color.Color, e.Height*e.Width) }()
+	defer func() {
+		fmt.Println("resetting them")
+		e.leds = make([]color.Color, e.Height*e.Width)
+	}()
 
+	fmt.Println(leds)
 	var c color.Color
 	for col := 0; col < e.Width; col++ {
 		for row := 0; row < e.Height; row++ {
 			c = e.At(col + (row * e.Width))
+			fmt.Println(e, e.w)
 			e.w.Fill(e.ledRect(col, row), c, screen.Over)
 		}
 	}

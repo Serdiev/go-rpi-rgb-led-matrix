@@ -5,7 +5,7 @@ import (
 	"image/color"
 	"net/rpc"
 
-	"github.com/Serdiev/go-rpi-rgb-led-matrix"
+	rgbmatrix "github.com/Serdiev/go-rpi-rgb-led-matrix"
 )
 
 func init() {
@@ -14,10 +14,11 @@ func init() {
 
 // RGBLedMatrix matrix representation for ws281x
 type Client struct {
-	network string
-	addr    string
-	client  *rpc.Client
-	leds    []color.Color
+	network    string
+	addr       string
+	client     *rpc.Client
+	leds       []color.Color
+	brightness int
 }
 
 // NewRGBLedMatrix returns a new matrix using the given size and config
@@ -76,4 +77,12 @@ func (m *Client) Set(position int, c color.Color) {
 // Close finalizes the ws281x interface
 func (c *Client) Close() error {
 	return c.Apply(make([]color.Color, 2048))
+}
+
+func (c *Client) GetBrightness() int {
+	return c.brightness
+}
+
+func (c *Client) SetBrightness(i int) {
+	c.brightness = i
 }

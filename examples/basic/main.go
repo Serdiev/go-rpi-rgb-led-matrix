@@ -4,8 +4,9 @@ import (
 	"flag"
 	"fmt"
 	"image/color"
+	"os"
 
-	"github.com/Serdiev/go-rpi-rgb-led-matrix"
+	rgbmatrix "github.com/Serdiev/go-rpi-rgb-led-matrix"
 )
 
 var (
@@ -21,6 +22,9 @@ var (
 )
 
 func main() {
+	fmt.Println("here")
+	fmt.Println(os.Getenv("MATRIX_TERMINAL_EMULATOR"))
+	fmt.Println("here")
 	config := &rgbmatrix.DefaultConfig
 	config.Rows = *rows
 	config.Cols = *cols

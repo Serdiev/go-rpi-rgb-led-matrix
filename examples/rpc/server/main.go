@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 
-	"github.com/Serdiev/go-rpi-rgb-led-matrix"
+	rgbmatrix "github.com/Serdiev/go-rpi-rgb-led-matrix"
 	"github.com/Serdiev/go-rpi-rgb-led-matrix/rpc"
 )
 
