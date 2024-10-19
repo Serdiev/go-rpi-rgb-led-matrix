@@ -2,9 +2,9 @@ package rgbmatrix
 
 import "C"
 import (
-	"github.com/jmaitrehenry/go-rpi-rgb-led-matrix/emulator"
-	"github.com/jmaitrehenry/go-rpi-rgb-led-matrix/julien"
-	"github.com/jmaitrehenry/go-rpi-rgb-led-matrix/terminal"
+	"github.com/Serdiev/go-rpi-rgb-led-matrix/emulator"
+	"github.com/Serdiev/go-rpi-rgb-led-matrix/julien"
+	"github.com/Serdiev/go-rpi-rgb-led-matrix/terminal"
 	"image/color"
 	"os"
 	"runtime"

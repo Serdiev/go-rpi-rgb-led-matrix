@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"image/color"
 
-	"github.com/jmaitrehenry/go-rpi-rgb-led-matrix"
+	"github.com/Serdiev/go-rpi-rgb-led-matrix"
 )
 
 var (

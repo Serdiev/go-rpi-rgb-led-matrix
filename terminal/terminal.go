@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/gdamore/tcell/termbox"
-	"github.com/jmaitrehenry/go-rpi-rgb-led-matrix/terminal/pxl"
+	"github.com/Serdiev/go-rpi-rgb-led-matrix/terminal/pxl"
 )
 
 type Terminal struct {
