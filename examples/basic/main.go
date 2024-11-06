@@ -36,6 +36,7 @@ func main() {
 	config.InverseColors = *inverse_colors
 	config.DisableHardwarePulsing = *disable_hardware_pulsing
 
+	fmt.Println("got here")
 	m, err := rgbmatrix.NewRGBLedMatrix(config)
 	fatal(err)
 

@@ -180,6 +180,7 @@ func isMatrixEmulator() bool {
 
 func isTerminalMatrixEmulator() bool {
 	if os.Getenv(TerminalMatrixEmulatorENV) == "1" {
+		fmt.Println("is term matrix")
 		return true
 	}
 	return false
@@ -247,16 +248,16 @@ func NewRGBLedMatrix(config *HardwareConfig) (c Matrix, err error) {
 		}
 	}()
 
-	if isJulienEmulator() {
-		fmt.Println("here")
-		return buildJulienMatrix(config), nil
-	}
-	return buildMatrixEmulator(config), nil
+	// if isJulienEmulator() {
+	// 	fmt.Println("here")
+	// 	return buildJulienMatrix(config), nil
+	// }
+	// return buildMatrixEmulator(config), nil
 	// return buildTerminalMatrixEmulator(config), nil
-	if isMatrixEmulator() {
-		fmt.Println("here1")
-		return buildMatrixEmulator(config), nil
-	}
+	// if isMatrixEmulator() {
+	// 	fmt.Println("here1")
+	// 	return buildMatrixEmulator(config), nil
+	// }
 	if isTerminalMatrixEmulator() {
 		fmt.Println("here 2")
 		return buildTerminalMatrixEmulator(config), nil
