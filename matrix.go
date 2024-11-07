@@ -42,12 +42,10 @@ import (
 	"fmt"
 	"image/color"
 	"os"
-	"runtime"
 	"strings"
 	"unsafe"
 
 	"github.com/Serdiev/go-rpi-rgb-led-matrix/emulator"
-	"github.com/Serdiev/go-rpi-rgb-led-matrix/julien"
 	"github.com/Serdiev/go-rpi-rgb-led-matrix/terminal"
 )
 
@@ -166,10 +164,6 @@ type RGBLedMatrix struct {
 const MatrixEmulatorENV = "MATRIX_EMULATOR"
 const TerminalMatrixEmulatorENV = "MATRIX_TERMINAL_EMULATOR"
 
-func isJulienEmulator() bool {
-	return runtime.GOOS == "darwin"
-}
-
 func isMatrixEmulator() bool {
 	if os.Getenv(MatrixEmulatorENV) == "1" {
 		return true
@@ -184,12 +178,6 @@ func isTerminalMatrixEmulator() bool {
 		return true
 	}
 	return false
-}
-
-func buildJulienMatrix(config *HardwareConfig) Matrix {
-	w, h := config.geometry()
-	matrix := julien.GenerateEmpty(h, w)
-	return &matrix
 }
 
 func buildMatrixEmulator(config *HardwareConfig) Matrix {
@@ -248,16 +236,6 @@ func NewRGBLedMatrix(config *HardwareConfig) (c Matrix, err error) {
 		}
 	}()
 
-	// if isJulienEmulator() {
-	// 	fmt.Println("here")
-	// 	return buildJulienMatrix(config), nil
-	// }
-	// return buildMatrixEmulator(config), nil
-	// return buildTerminalMatrixEmulator(config), nil
-	// if isMatrixEmulator() {
-	// 	fmt.Println("here1")
-	// 	return buildMatrixEmulator(config), nil
-	// }
 	if isTerminalMatrixEmulator() {
 		fmt.Println("here 2")
 		return buildTerminalMatrixEmulator(config), nil
