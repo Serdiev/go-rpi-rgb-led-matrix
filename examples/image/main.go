@@ -39,7 +39,7 @@ func main() {
 	config.InverseColors = *inverse_colors
 	config.DisableHardwarePulsing = *disable_hardware_pulsing
 
-	m, err := rgbmatrix.NewRGBLedMatrix(config)
+	m, err := rgbmatrix.NewRGBLedMatrixOrEmulator(config)
 	fatal(err)
 
 	tk := rgbmatrix.NewToolKit(m)

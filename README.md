@@ -69,7 +69,7 @@ Setting all the pixels to white:
 
 ```go
 // create a new Matrix instance with the DefaultConfig
-m, _ := rgbmatrix.NewRGBLedMatrix(&rgbmatrix.DefaultConfig)
+m, _ := rgbmatrix.NewRGBLedMatrixOrEmulator(&rgbmatrix.DefaultConfig)
 
 // create the Canvas, implements the image.Image interface
 c := rgbmatrix.NewCanvas(m)
@@ -86,7 +86,7 @@ Playing a GIF into your matrix during 30 seconds:
 
 ```go
 // create a new Matrix instance with the DefaultConfig
-m, _ := rgbmatrix.NewRGBLedMatrix(&rgbmatrix.DefaultConfig)
+m, _ := rgbmatrix.NewRGBLedMatrixOrEmulator(&rgbmatrix.DefaultConfig)
 
 // create a ToolKit instance
 tk := rgbmatrix.NewToolKit(m)
@@ -115,7 +115,7 @@ Matrix Emulation
 
 As part of the library an small Matrix emulator is provided. The emulator renderize a virtual RGB matrix on a window in your desktop, without needing a real RGB matrix connected to your computer.
 
-To execute the emulator set the `MATRIX_EMULATOR` environment variable to `1`, then when `NewRGBLedMatrix` is used, a `emulator.Emulator` is returned instead of a interface the real board.
+To execute the emulator set the `MATRIX_EMULATOR` environment variable to `1`, then when `NewRGBLedMatrixOrEmulator` is used, a `emulator.Emulator` is returned instead of a interface the real board.
 
 
 License

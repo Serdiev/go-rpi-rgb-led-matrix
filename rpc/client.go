@@ -21,7 +21,7 @@ type Client struct {
 	brightness int
 }
 
-// NewRGBLedMatrix returns a new matrix using the given size and config
+// NewRGBLedMatrixOrEmulator returns a new matrix using the given size and config
 func NewClient(network, addr string) (rgbmatrix.Matrix, error) {
 	client, err := rpc.DialHTTP(network, addr)
 	if err != nil {
