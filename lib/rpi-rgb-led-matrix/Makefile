@@ -11,9 +11,6 @@ CSHARP_LIB_DIR=bindings/c\#
 
 all : $(RGB_LIBRARY)
 
-build-lib:
-	$(MAKE) -C $(RGB_LIBDIR)
-
 $(RGB_LIBRARY): FORCE
 	$(MAKE) -C $(RGB_LIBDIR)
 	$(MAKE) -C examples-api-use
@@ -25,6 +22,7 @@ clean:
 	$(MAKE) -C $(PYTHON_LIB_DIR) clean
 
 build-csharp:
+	$(MAKE) -C $(CSHARP_LIB_DIR) nuget
 	$(MAKE) -C $(CSHARP_LIB_DIR) build
 
 build-python: $(RGB_LIBRARY)
