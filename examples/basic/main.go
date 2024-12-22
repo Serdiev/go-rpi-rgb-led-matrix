@@ -37,7 +37,7 @@ func main() {
 	config.DisableHardwarePulsing = *disable_hardware_pulsing
 
 	fmt.Println("got here")
-	m, err := rgbmatrix.NewRGBLedMatrix(config)
+	m, err := rgbmatrix.NewRGBLedMatrixOrEmulator(config)
 	fatal(err)
 
 	c := rgbmatrix.NewCanvas(m)

@@ -224,8 +224,8 @@ func uint32ToColor(u uint32) color.Color {
 	}
 }
 
-// NewRGBLedMatrix returns a new matrix using the given size and config
-func NewRGBLedMatrix(config *HardwareConfig) (c Matrix, err error) {
+// NewRGBLedMatrixOrEmulator returns a new matrix using the given size and config
+func NewRGBLedMatrixOrEmulator(config *HardwareConfig) (c Matrix, err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			var ok bool
@@ -237,11 +237,39 @@ func NewRGBLedMatrix(config *HardwareConfig) (c Matrix, err error) {
 	}()
 
 	if isTerminalMatrixEmulator() {
-		fmt.Println("here 2")
 		return buildTerminalMatrixEmulator(config), nil
 	}
 
-	fmt.Println("here 3")
+	m := C.led_matrix_create_from_options(config.toC(), nil, nil)
+	b := C.led_matrix_create_offscreen_canvas(m)
+
+	var w, h C.int
+	C.led_canvas_get_size(b, &w, &h)
+
+	c = &RGBLedMatrix{
+		Config: config,
+		width:  int(w), height: int(h),
+		matrix: m,
+		buffer: b,
+		leds:   make([]uint32, int(w)*int(h)),
+	}
+	if m == nil {
+		return nil, fmt.Errorf("unable to allocate memory")
+	}
+
+	return c, nil
+}
+
+func NewRGBLedMatrix(config *HardwareConfig) (c *RGBLedMatrix, err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			var ok bool
+			err, ok = r.(error)
+			if !ok {
+				err = fmt.Errorf("error creating matrix: %v", r)
+			}
+		}
+	}()
 
 	m := C.led_matrix_create_from_options(config.toC(), nil, nil)
 	b := C.led_matrix_create_offscreen_canvas(m)

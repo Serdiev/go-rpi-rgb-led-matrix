@@ -217,6 +217,73 @@ private:
   int parallel_;
 };
 
+
+
+class VerticalMapper : public PixelMapper {
+public:
+  VerticalMapper() {}
+
+  virtual const char *GetName() const { return "V-mapper"; }
+
+  virtual bool SetParameters(int chain, int parallel, const char *param) {
+    chain_ = chain;
+    parallel_ = parallel;
+    // optional argument :Z allow for every other panel to be flipped
+    // upside down so that cabling can be shorter:
+    // [ O < I ]   without Z       [ O < I  ]
+    //   ,---^      <----                ^
+    // [ O < I ]                   [ I > O  ]
+    //   ,---^            with Z     ^
+    // [ O < I ]            --->   [ O < I  ]
+    z_ = (param && strcasecmp(param, "Z") == 0);
+    return true;
+  }
+
+  virtual bool GetSizeMapping(int matrix_width, int matrix_height,
+                              int *visible_width, int *visible_height)
+    const {
+    *visible_width = matrix_width * parallel_ / chain_;
+    *visible_height = matrix_height * chain_ / parallel_;
+#if 0
+     fprintf(stderr, "%s: C:%d P:%d. Turning W:%d H:%d Physical "
+	     "into W:%d H:%d Virtual\n",
+             GetName(), chain_, parallel_,
+	     *visible_width, *visible_height, matrix_width, matrix_height);
+#endif
+    return true;
+  }
+
+  virtual void MapVisibleToMatrix(int matrix_width, int matrix_height,
+                                  int x, int y,
+                                  int *matrix_x, int *matrix_y) const {
+    const int panel_width  = matrix_width  / chain_;
+    const int panel_height = matrix_height / parallel_;
+    // because the panel you plug into ends up being the "bottom" panel and coordinates
+    // start from the top panel, and you typically don't wire the bottom panel (first in
+    // the chain) upside down, whether each panel gets swapped depends on this.
+    // Without this, if you wire for 4 panels high and add a 5h panel, without this
+    // code everything would get reversed and you'd have to re-layout all the panels
+    bool is_height_even_panels = ( matrix_width / panel_width) % 2;
+    const int x_panel_start = y / panel_height * panel_width;
+    const int y_panel_start = x / panel_width * panel_height;
+    const int x_within_panel = x % panel_width;
+    const int y_within_panel = y % panel_height;
+    const bool needs_flipping = z_ && (is_height_even_panels - ((y / panel_height) % 2)) == 0;
+    *matrix_x = x_panel_start + (needs_flipping
+                                 ? panel_width - 1 - x_within_panel
+                                 : x_within_panel);
+    *matrix_y = y_panel_start + (needs_flipping
+                                 ? panel_height - 1 - y_within_panel
+                                 : y_within_panel);
+  }
+
+private:
+  bool z_;
+  int chain_;
+  int parallel_;
+};
+
+
 typedef std::map<std::string, PixelMapper*> MapperByName;
 static void RegisterPixelMapperInternal(MapperByName *registry,
                                         PixelMapper *mapper) {
@@ -233,6 +300,7 @@ static MapperByName *CreateMapperMap() {
   // Register all the default PixelMappers here.
   RegisterPixelMapperInternal(result, new RotatePixelMapper());
   RegisterPixelMapperInternal(result, new UArrangementMapper());
+  RegisterPixelMapperInternal(result, new VerticalMapper());
   RegisterPixelMapperInternal(result, new MirrorPixelMapper());
   return result;
 }
