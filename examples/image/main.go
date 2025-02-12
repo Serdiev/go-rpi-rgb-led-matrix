@@ -10,10 +10,10 @@ import (
 )
 
 var (
-	rows                     = flag.Int("led-rows", 32, "number of rows supported")
-	cols                     = flag.Int("led-cols", 32, "number of columns supported")
+	rows                     = flag.Int("led-rows", 64, "number of rows supported")
+	cols                     = flag.Int("led-cols", 64, "number of columns supported")
 	parallel                 = flag.Int("led-parallel", 1, "number of daisy-chained panels")
-	chain                    = flag.Int("led-chain", 2, "number of displays daisy-chained")
+	chain                    = flag.Int("led-chain", 1, "number of displays daisy-chained")
 	brightness               = flag.Int("brightness", 100, "brightness (0-100)")
 	hardware_mapping         = flag.String("led-gpio-mapping", "regular", "Name of GPIO mapping used.")
 	show_refresh             = flag.Bool("led-show-refresh", false, "Show refresh rate.")
